@@ -22,13 +22,14 @@ namespace CadastroProduto
             return -1;
         }
 
-        public void Create(string nome, string tipo)
+        public void Create(string? nome, string? tipo)
         {
-            int newId = 0;
+            int newId = 1;
             if (produtos.Count > 0) {
                 newId = produtos[produtos.Count - 1].Id + 1;
             } else if (produtos.Count < 0) {
                 Console.WriteLine("Erro desconhecido.");
+                return;
             }
             Produto produto = new Produto(newId, nome, tipo);
             produtos.Add(produto);
@@ -43,6 +44,18 @@ namespace CadastroProduto
             }
             Console.WriteLine($"Nome do produto: {produtos[index].Nome}\n" +
                                 $"Tipo do produto: {produtos[index].Tipo}");
+        }
+
+        public void ReadAll()
+        {
+            for (int i = 0; i < produtos.Count; i++)
+            {
+                Console.WriteLine(
+                    $"Produto {produtos[i].Id}\n" +
+                    $"Nome: {produtos[i].Nome}\n" +
+                    $"Tipo: {produtos[i].Tipo}\n" +
+                    "-------------------");
+            }
         }
 
         public void Update(int id)
@@ -67,6 +80,7 @@ namespace CadastroProduto
             int index = FindProductId(id);
             if (index == -1) {
                 Console.WriteLine("Produto não encontrado!");
+                return;
             }
             produtos.RemoveAt(index);
         }
